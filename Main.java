@@ -7,7 +7,7 @@ public class Main {
 
         BufferedReader reader;
         try {
-            reader = new BufferedReader(new FileReader("C:\\Users\\Guillaume\\Documents\\Code\\Java\\Huffman\\test.txt"));
+            reader = new BufferedReader(new FileReader("test.txt"));
             fillABR(reader, abr);
             reader.close();
         } catch (FileNotFoundException e) {
@@ -42,9 +42,18 @@ public class Main {
     }
 
     public static ABR huffman(ABR a){
+        
         ABR result = new ABR();
+        Stack<ABR> stack = new Stack<ABR>(result);
 
-        result.setLeft(new ABR(a.minOcc()));
+        Elt tmp = a.minOcc();
+        result.setLeft(new ABR(tmp));
+        a.suppr(tmp);
+        
+        tmp = a.minOcc();
+        result.setRight(new ABR(tmp));
+        a.suppr(tmp);
+
         return result;
 
     }

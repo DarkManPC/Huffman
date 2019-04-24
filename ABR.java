@@ -8,16 +8,6 @@ public class ABR{
         EMPTY;
     }
 
-    private class Pair{
-        ABR abr = null;
-        Elt elt = null;
-
-        Pair(ABR a, Elt e){
-            this.abr = a;
-            this.elt = e;
-        }
-    }
-
     private Elt root;
 
     private ABR left;
@@ -28,8 +18,8 @@ public class ABR{
     public ABR(){
 
         this.root = null;
-        this.left = null;//new ABR();
-        this.right = null;//new ABR();
+        this.left = null;
+        this.right = null;
         this.state = State.EMPTY;
 
     }
@@ -200,17 +190,30 @@ public class ABR{
 
     public Elt supprMax(){
         ABR tmp = this;
+        ABR parent = this;
 
         while(tmp.getRight() != null){
+            parent = tmp;
             tmp = tmp.getRight();
         }
 
         Elt result = tmp.getRoot();
 
-        tmp.setRoot(tmp.getLeft().getRoot());
-        tmp.setLeft(tmp.getLeft().getLeft());
-        tmp.setRight(tmp.getLeft().getRight());
-        tmp.setState(tmp.getLeft().getState());
+        switch(this.getState()){
+            case EMPTY:
+                break;
+            case LEAF:
+                parent.setRight(null);
+                break;
+            case SIMPLELEFT:
+            case SIMPLERIGHT:
+            case DOUBLE:
+                tmp.setRoot(tmp.getLeft().getRoot());
+                tmp.setLeft(tmp.getLeft().getLeft());
+                tmp.setRight(tmp.getLeft().getRight());
+                tmp.setState(tmp.getLeft().getState());
+                break;
+        }
         
         return result;
     } 
