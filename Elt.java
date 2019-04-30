@@ -8,6 +8,11 @@ public class Elt{
         this.occ = 1;
     }
 
+    Elt(int occ_){
+        this.c = 0;
+        this.occ = occ_;
+    }
+
     void incr(){
         this.occ = this.occ + 1;
     }
